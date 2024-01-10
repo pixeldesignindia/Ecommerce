@@ -9,7 +9,9 @@ export const myCache = new NodeCache()
 import userRouter from "./routes/user.js"
 import productRouter from "./routes/product.js"
 import addressRouter from "./routes/address.js"
-
+import orderRouter from "./routes/order.js"
+import paymentRouter from "./routes/payment.js"
+import statisticsRouter from "./routes/statistics.js"
 const app = express();
 app.use(express.json());
 
@@ -20,7 +22,9 @@ const port = 4000;
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/products",productRouter)
 app.use("/api/v1/address",addressRouter)
-
+app.use("/api/v1/orders",orderRouter)
+app.use("/api/v1/payments",paymentRouter)
+app.use("/api/v1/statistics",paymentRouter)
 
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);

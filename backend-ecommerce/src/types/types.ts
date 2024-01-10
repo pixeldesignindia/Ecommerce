@@ -76,5 +76,6 @@ export interface NewOrderRequestBody {
   shippingCharges: number;
   discount: number;
   total: number;
+  paymentMethod: string;
   orderItems: OrderItemType[];
 }
