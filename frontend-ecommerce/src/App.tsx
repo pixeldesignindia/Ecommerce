@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./global.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Header from "./components/Header/Header";
-
+import { Toaster } from "react-hot-toast";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import { userExist } from "./redux/userReducer";
+import { useDispatch } from "react-redux";
 const Home = lazy(() => import("./pages/home/Home"));
+const Login = lazy(() => import("./pages/login/Login"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
 const Search = lazy(() => import("./pages/search/Search"));
 // Admin Imports
@@ -24,6 +29,14 @@ const ProductManagement = lazy(() => import("./pages/admin/management/productman
 const TransactionManagement = lazy(() =>import("./pages/admin/management/transactionmanagement"));
 
 const App = () => {
+const dispatch= useDispatch()
+
+useEffect(()=>{
+onAuthStateChanged(auth,(user)=>{
+if(user){console.log('logged in') dispatch(userExist())} 
+else{console.log('not logged in')}
+})},[]);
+
   return (
     <BrowserRouter>
       <Suspense fallback={<h5>Loading...</h5>}>
@@ -32,6 +45,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/login" element={<Login />} />
           {/* Admin Routes */}
           {/* <Route element={<ProtectedRoute isAuthenticated={true} adminRoute={true} isAdmin={true} />}
 > */}
@@ -55,6 +69,7 @@ const App = () => {
           {/* </Route>; */}
         </Routes>
       </Suspense>
+      <Toaster position="top-right"/>
     </BrowserRouter>
   );
 };
