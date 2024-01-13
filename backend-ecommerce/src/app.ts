@@ -3,6 +3,8 @@ import { connectDB } from "./utils/features.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import NodeCache from "node-cache";
 export const myCache = new NodeCache()
+import cors from"cors"
+
 
 
 //importing Routes
@@ -14,6 +16,7 @@ import paymentRouter from "./routes/payment.js"
 import statisticsRouter from "./routes/statistics.js"
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 connectDB("mongodb+srv://manaskumar:iFVJhjYrsH7iars8@cluster0.s4pqkzd.mongodb.net/?retryWrites=true&w=majority");
 const port = 4000;
