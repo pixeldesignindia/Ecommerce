@@ -7,7 +7,7 @@ const productApi = createApi({
         baseUrl:'https://fakestoreapi.com/',
     }),
     endpoints:(builder)=>({
-        getProducts:builder.query<Product[],string>({query:()=>'products'})
+        getProducts:builder.query<Product[],string>({query:()=>'products/'})
     })
 })
 

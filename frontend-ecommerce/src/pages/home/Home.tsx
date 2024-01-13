@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   };
   return (
     <div className='product-container'>
-      {data?.map((product) => (
+      {isLoading ? <>loading</> : data?.map((product) => (
         <div key={product.id} className='product-card'>
           <p>ID: {product.id}</p>
           <img src={product.image} alt={product.name} style={{ width: '200px', height: '200px' }} />

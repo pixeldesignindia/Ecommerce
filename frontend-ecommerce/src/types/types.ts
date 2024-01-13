@@ -4,4 +4,5 @@ export interface User{
     gender: string;
     _id: string;
     photo: string;
+    role?:string
 }

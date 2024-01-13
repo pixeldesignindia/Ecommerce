@@ -7,8 +7,12 @@ import Header from "./components/Header/Header";
 import { Toaster } from "react-hot-toast";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import { userExist } from "./redux/userReducer";
-import { useDispatch } from "react-redux";
+import { userExist, userNotExist } from "./redux/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "./redux/api/userApi";
+import { UserReducerInitialState } from "./types/reducerTypes";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
+
 const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
@@ -30,25 +34,40 @@ const TransactionManagement = lazy(() =>import("./pages/admin/management/transac
 
 const App = () => {
 const dispatch= useDispatch()
-
+const {user,loading}= useSelector((state:{userReducer:UserReducerInitialState})=>state.userReducer)
 useEffect(()=>{
-onAuthStateChanged(auth,(user)=>{
-if(user){console.log('logged in') dispatch(userExist())} 
-else{console.log('not logged in')}
+onAuthStateChanged(auth,async(user)=>{
+if(user){
+  const data = await getUser(user.uid)
+  console.log(data)
+  dispatch(userExist(data.user))
+  console.log(user) }
+else{dispatch(userNotExist())}
 })},[]);
 
   return (
     <BrowserRouter>
       <Suspense fallback={<h5>Loading...</h5>}>
-        <Header/>
+        <Header user={user || null}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<ProtectedRoute isAuthenticated={user?false:true}><Login /></ProtectedRoute> } />
+
+
+           {/* Logged In User Routes */}
+          <Route
+            element={<ProtectedRoute isAuthenticated={user ? true : false} />}
+          >
+            {/* <Route path="/shipping" element={<Shipping />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
+            <Route path="/pay" element={<Checkout />} /> */}
+          </Route>
           {/* Admin Routes */}
-          {/* <Route element={<ProtectedRoute isAuthenticated={true} adminRoute={true} isAdmin={true} />}
-> */}
+          <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role==='admin'?true:false} />}
+>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/product" element={<Products />} />
           <Route path="/admin/customer" element={<Customers />} />
@@ -66,7 +85,7 @@ else{console.log('not logged in')}
           <Route path="/admin/product/:id" element={<ProductManagement />} />
           <Route path="/admin/transaction/:id" element={<TransactionManagement />}
           />
-          {/* </Route>; */}
+          </Route>;
         </Routes>
       </Suspense>
       <Toaster position="top-right"/>
