@@ -38,6 +38,7 @@ const {user,loading}= useSelector((state:{userReducer:UserReducerInitialState})=
 useEffect(()=>{
 onAuthStateChanged(auth,async(user)=>{
 if(user){
+  console.log(user)
   const data = await getUser(user.uid)
   console.log(data)
   dispatch(userExist(data.user))

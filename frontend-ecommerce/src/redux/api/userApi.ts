@@ -7,7 +7,7 @@ import axios from "axios";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl:' https://localhost:4000/api/v1/user/',
+    baseUrl:'http://localhost:4000/api/v1/users',
   }),
   endpoints: (builder) => ({
     login: builder.mutation<MessageResponse, User>({
@@ -23,9 +23,9 @@ export const userApi = createApi({
 export const getUser = async (id: string) => {
   try {
     const { data } = await axios.get(
-    `https://localhost:4000/api/v1/user/${id}`
+    `http://localhost:4000/api/v1/users/${id}`
     );
     return data;
-  } catch {}
+  } catch(error) {console.log(error)}
 };
 export const { useLoginMutation } = userApi;

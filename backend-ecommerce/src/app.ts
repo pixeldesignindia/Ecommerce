@@ -3,7 +3,6 @@ import express from "express";
 import { connectDB } from "./utils/features.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import NodeCache from "node-cache";
-
 import cors from"cors"
 import Stripe from "stripe"
 
@@ -27,15 +26,11 @@ import paymentRouter from "./routes/payment.js"
 import statisticsRouter from "./routes/statistics.js"
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
+app.use(cors({
+    origin: ['http://localhost:3000','https://localhost:3000',],
+    methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH'],
     credentials: true,
-    origin:  ["http://localhost:3000"]
-  })
-);
-
-
-
+  }));
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/product",productRouter)
 app.use("/api/v1/address",addressRouter)

@@ -10,7 +10,7 @@ import { MessageResponse } from '../../types/api-types'
 const Login = () => {
 const [login]=useLoginMutation()
 const [gender,setGender]=useState('')
-const [date , setDate]=useState("")
+const [dob , setDob]=useState("")
 
 
 const loginHandler = async () => {
@@ -22,8 +22,10 @@ const loginHandler = async () => {
       email:user.email!,
       photo:user.photoURL!,
       _id:user.uid!,
-      gender
+      gender,
+      dob
     })
+    console.log(res)
     if('data' in res) {
 toast.success(res.data.message);
     }else{
@@ -49,6 +51,10 @@ toast.success(res.data.message);
                 <option value="male">Male</option>
                 <option value="female">Female</option>
             </select>
+        </div>
+        <div>
+            <label>Date of Birth</label>
+            <input type="date" value={dob} onChange={(e)=>{setDob(e.target.value)}}/>
         </div>
         <div><button onClick={loginHandler}>Signin With Google <FcGoogle/> </button></div>
       </main>
