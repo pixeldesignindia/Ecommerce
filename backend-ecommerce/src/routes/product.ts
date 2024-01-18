@@ -15,7 +15,7 @@ import { singleUpload } from "../middlewares/multer.js";
 
 
 //To Create New Product  - /api/v1/product/new
-app.post("/new", adminOnly, singleUpload, newProduct);
+app.post("/new",  singleUpload, newProduct);
 
 //To get all Products with filters  - /api/v1/product/all
 app.get("/all", getAllProducts);
