@@ -6,6 +6,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./userReducer";
+import { latestProductApi} from "./api/productsApi";
 export const server = import.meta.env.VITE_API_URL
 const persistConfig = {
     key: 'root',
@@ -18,6 +19,7 @@ const reducer = combineReducers({
     userReducer: userReducer.reducer,
     cart: cartReducer,
     userApi: userApi.reducer,
+    latestProductApi:latestProductApi.reducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
@@ -29,5 +31,5 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: ['persist/PERSIST'],
             },
-        }).concat(productApi.middleware).concat(userApi.middleware),
+        }).concat(productApi.middleware).concat(userApi.middleware).concat(latestProductApi.middleware),
 })
