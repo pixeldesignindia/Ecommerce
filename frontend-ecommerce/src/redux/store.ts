@@ -7,9 +7,12 @@ import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./userReducer";
 import { latestProductApi} from "./api/productsApi";
+
 export const server = 'http://localhost:4000'
-const persistConfig = {
-    key: 'root',
+
+// Persist configuration for the cart slice
+const cartPersistConfig = {
+    key: 'cart',
     version: 1,
     storage
 }
@@ -17,12 +20,16 @@ const persistConfig = {
 const reducer = combineReducers({
     productApi: productApi.reducer,
     userReducer: userReducer.reducer,
-    cart: cartReducer,
+    cart: persistReducer(cartPersistConfig, cartReducer),
     userApi: userApi.reducer,
-    latestProductApi:latestProductApi.reducer,
+    latestProductApi: latestProductApi.reducer,
 })
 
-const persistedReducer = persistReducer(persistConfig, reducer)
+const persistedReducer = persistReducer({
+    key: 'root',
+    version: 1,
+    storage
+}, reducer)
 
 export const store = configureStore({
     reducer: persistedReducer,

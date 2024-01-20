@@ -24,8 +24,9 @@ const Header = ({ user }: propestype) => {
       <Link to={"/product"}>Product</Link>
       <Link to={"/cart"}>
         <FaShoppingBag />
+        
       </Link>
-      {user?._id ? <FaUser /> : <Link to={"/logIn"}>SignIn</Link>}
+      {user?._id ? <><FaUser /><button onClick={logOutHandler}>Log Out</button></> : <Link to={"/logIn"}>SignIn</Link>}
     </nav>
   );
 };

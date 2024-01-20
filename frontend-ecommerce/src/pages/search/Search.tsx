@@ -27,6 +27,7 @@ const Search = () => {
     error,
     isError,
   } = useCategoriesQuery("");
+  console.log(categoriesResponse)
   if (isError) {
     const err = error as CustomError;
     toast.error(err.data.message);
