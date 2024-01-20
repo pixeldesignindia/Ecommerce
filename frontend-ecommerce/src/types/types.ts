@@ -8,9 +8,10 @@ export interface User{
     dob: string;
 }
 export interface Product{
-    name: string;
-    category: string;
+    name:string;
+    category:string;
     price: number;
     _id: string;
     photo: string;
+    stock:number;
 }

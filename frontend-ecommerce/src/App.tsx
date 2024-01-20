@@ -53,10 +53,8 @@ else{dispatch(userNotExist())}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/product" element={<Search />} />
           <Route path="/login" element={<ProtectedRoute isAuthenticated={user?false:true}><Login /></ProtectedRoute> } />
-
-
            {/* Logged In User Routes */}
           <Route
             element={<ProtectedRoute isAuthenticated={user ? true : false} />}

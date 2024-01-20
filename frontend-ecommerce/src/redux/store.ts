@@ -7,7 +7,7 @@ import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 import { userReducer } from "./userReducer";
 import { latestProductApi} from "./api/productsApi";
-export const server = import.meta.env.VITE_API_URL
+export const server = 'http://localhost:4000'
 const persistConfig = {
     key: 'root',
     version: 1,
