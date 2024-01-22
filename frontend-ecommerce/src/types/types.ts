@@ -15,3 +15,19 @@ export interface Product{
     photo: string;
     stock:number;
 }
+export type CartItem = {
+    productId: string;
+    photo: string;
+    name: string;
+    price: number;
+    quantity: number;
+    stock: number;
+  };
+
+  export type ShippingInfo = {
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    pinCode: string;
+  };
