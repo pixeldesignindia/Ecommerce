@@ -3,20 +3,20 @@ import { CartReducerInitialState } from "../types/reducerTypes";
 import { CartItem, ShippingInfo } from "../../src/types/types";
 
 const initialState: CartReducerInitialState = {
-  loading: false,
-  cartItems: [],
-  subtotal: 0,
-  tax: 0,
-  shippingCharges: 0,
-  discount: 0,
-  total: 0,
-  shippingInfo: {
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    pinCode: "",
-  },
+    loading: false,
+    cartItems: [],
+    subtotal: 0,
+    tax: 0,
+    shippingCharges: 0,
+    discount: 0,
+    total: 0,
+    shippingInfo: {
+        address: "",
+        city: "",
+        state: "",
+        country: "",
+        pinCode: "",
+    },
 };
 
 export const cartReducer = createSlice({

@@ -6,6 +6,9 @@ import {
 import { CustomError } from "../../types/api-types";
 import { toast } from "react-hot-toast";
 import ProductCard from "../../components/productCard/ProductCard";
+import { addToCart } from "../../redux/cart-reducer";
+import { CartItem } from "../../types/types";
+import { useDispatch } from "react-redux";
 const Search = () => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
@@ -20,6 +23,14 @@ const Search = () => {
     error: productError,
   } = useSearchProductsQuery({ search, sort, category, page, price: maxPrice });
   console.log(searchData);
+
+
+  const dispatch = useDispatch();
+  const addToCartHandler = (cartItem: CartItem) => {
+    if (cartItem.stock < 1) return toast.error("Out of Stock");
+    dispatch(addToCart(cartItem));
+    toast.success("Added to cart");
+  };
 
   const {
     data: categoriesResponse,
@@ -99,7 +110,7 @@ const Search = () => {
                 price={i.price}
                 stock={i.stock}
                 category={i.category}
-                // handler={addToCartHandler}
+                handler={addToCartHandler}
                 photo={i.photo}
               />
             ))}

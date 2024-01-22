@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useGetProductsQuery } from "../../redux/api/api";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/reducer";
+// import { addToCart } from "../../redux/reducer";
 import "./home.css";
 import { useLatestProductsQuery } from "../../redux/api/productsApi";
 import toast from "react-hot-toast";
 import { server } from "../../redux/store";
 import { Product } from "../../types/types";
 import ProductCard from "../../components/productCard/ProductCard";
+import { addToCart } from "../../redux/cart-reducer";
+import { CartItem } from "../../types/types";
 const Home: React.FC = () => {
   const { isLoading, data, isError, error, isSuccess } =
     useLatestProductsQuery("");
@@ -17,15 +19,10 @@ const Home: React.FC = () => {
     toast.error("Can't Fetch Products");
   }
   const dispatch = useDispatch();
-  const handleAddToCart = (e: Product) => {
-    dispatch(
-      addToCart({
-        id: e._id,
-        name: e.name,
-        price: e.price,
-        quantity: 1,
-      })
-    );
+  const addToCartHandler = (cartItem: CartItem) => {
+    if (cartItem.stock < 1) return toast.error("Out of Stock");
+    dispatch(addToCart(cartItem));
+    toast.success("Added to cart");
   };
   return (
     <>
@@ -40,19 +37,10 @@ const Home: React.FC = () => {
               name={i.name}
               price={i.price}
               stock={i.stock}
-              // handler={addToCartHandler}
+              handler={addToCartHandler}
               photo={i.photo}
+              category={i.category}
             />
-
-            // <div key={product._id} className='product-card'>
-            //   <p>ID: {product._id}</p>
-            //   <img src={`${server}/${product.photo}`} alt={product.name} style={{ width: '200px', height: '200px' }} />
-            //   <p>Name: {product.name}</p>
-            //   <p>Stock: {product.stock}</p>
-            //   <p>Price: ${product.price}</p>
-            //   <p>Description: {product.category}</p>
-            //   <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
-            // </div>
           ))
         ) : null}
       </div>

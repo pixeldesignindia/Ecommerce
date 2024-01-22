@@ -1,4 +1,3 @@
-import React from "react";
 import { FaSearch, FaShoppingBag, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./header.css";
@@ -6,10 +5,14 @@ import { User } from "../../types/types";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import toast from "react-hot-toast";
+import { RootState, server } from "../../redux/store";
+import { useSelector } from "react-redux";
+
 interface propestype {
   user: User | null;
 }
 const Header = ({ user }: propestype) => {
+  const { cartItems } =useSelector((state: RootState) => state.cart);
   const logOutHandler = async () => {
     try {
       signOut(auth);
@@ -24,7 +27,7 @@ const Header = ({ user }: propestype) => {
       <Link to={"/product"}>Product</Link>
       <Link to={"/cart"}>
         <FaShoppingBag />
-        
+        {cartItems && cartItems.length>=1 && cartItems.length}
       </Link>
       {user?._id ? <><FaUser /><button onClick={logOutHandler}>Log Out</button></> : <Link to={"/logIn"}>SignIn</Link>}
     </nav>
