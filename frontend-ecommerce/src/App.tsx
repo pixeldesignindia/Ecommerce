@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./global.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -33,19 +33,18 @@ const ProductManagement = lazy(() => import("./pages/admin/management/productman
 const TransactionManagement = lazy(() =>import("./pages/admin/management/transactionmanagement"));
 
 const App = () => {
+  const [userState, setUserState]=useState(null)
 const dispatch= useDispatch()
 const {user,loading}= useSelector((state:{userReducer:UserReducerInitialState})=>state.userReducer)
+
 useEffect(()=>{
 onAuthStateChanged(auth,async(user)=>{
 if(user){
-  console.log(user)
   const data = await getUser(user.uid)
-  console.log(data)
-  dispatch(userExist(data.user))
-  console.log(user) }
+  dispatch(userExist(data.user)) }
 else{dispatch(userNotExist())}
 })},[]);
-
+console.log(user)
   return (
     <BrowserRouter>
       <Suspense fallback={<h5>Loading...</h5>}>
@@ -65,8 +64,7 @@ else{dispatch(userNotExist())}
             <Route path="/pay" element={<Checkout />} /> */}
           </Route>
           {/* Admin Routes */}
-          <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role==='admin'?true:false} />}
->
+          <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role==="admin" ? true : false} />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/product" element={<Products />} />
           <Route path="/admin/customer" element={<Customers />} />

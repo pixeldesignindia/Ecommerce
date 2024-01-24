@@ -12,7 +12,7 @@ interface propestype {
   user: User | null;
 }
 const Header = ({ user }: propestype) => {
-  const { cartItems } =useSelector((state: RootState) => state.cart);
+  const { cartItems } =useSelector((state: RootState) => state.cartReducer);
   const logOutHandler = async () => {
     try {
       signOut(auth);
@@ -29,7 +29,7 @@ const Header = ({ user }: propestype) => {
         <FaShoppingBag />
         {cartItems && cartItems.length>=1 && cartItems.length}
       </Link>
-      {user?._id ? <><FaUser /><button onClick={logOutHandler}>Log Out</button></> : <Link to={"/logIn"}>SignIn</Link>}
+      {user?._id ? <><Link to={"/admin/product"}><FaUser /></Link><button onClick={logOutHandler}>Log Out</button></> : <Link to={"/logIn"}>SignIn</Link>}
     </nav>
   );
 };

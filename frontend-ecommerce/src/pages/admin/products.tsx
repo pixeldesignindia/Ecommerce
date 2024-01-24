@@ -46,10 +46,11 @@ const columns: Column<DataType>[] = [
 const Products = () => {
 
   const {user}= useSelector((state:{userReducer:UserReducerInitialState})=>state.userReducer)
+  console.log(user)
   const { data,error,isError } = useAllProductsQuery(user?._id!);
   if (isError) {
     const err = error as CustomError;
-    toast.error(err.data.message);
+    console.log(err.data.message);
   }
   const [rows, setRows] = useState<DataType[]>([]);
 useEffect(()=>{  if (data) {
