@@ -1,11 +1,22 @@
+import {config} from "dotenv";
 import express from "express";
 import { connectDB } from "./utils/features.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import NodeCache from "node-cache";
-export const myCache = new NodeCache()
+
 import cors from"cors"
+import Stripe from "stripe"
 
 
+config({ path: "./.env" });
+
+const port = process.env.PORT ;
+const mongoURI = process.env.MONGO_URI || "";
+const stripeKey = process.env.STRIPE_KEY || "";
+
+connectDB(mongoURI);
+export const stripe = new Stripe(stripeKey);
+export const myCache = new NodeCache();
 
 //importing Routes
 import userRouter from "./routes/user.js"
@@ -23,8 +34,6 @@ app.use(
   })
 );
 
-connectDB("mongodb+srv://manaskumar:iFVJhjYrsH7iars8@cluster0.s4pqkzd.mongodb.net/?retryWrites=true&w=majority");
-const port = 4000;
 
 
 app.use("/api/v1/users",userRouter)
@@ -37,5 +46,5 @@ app.use("/api/v1/statistics",statisticsRouter)
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 app.listen(port, () => {
-console.log(`express listening on port${port}`);
+console.log(`express listening on port ${port}`);
 });

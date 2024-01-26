@@ -195,6 +195,9 @@ import { calculatePercentage, getInventories } from "../utils/features.js";
     stats,
   });
 });
+
+
+
 export const getPieCharts = TryCatch(async (req, res, next) => {
   let charts;
   const key = "admin-pie-charts";
