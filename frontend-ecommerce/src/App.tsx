@@ -17,6 +17,7 @@ const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
 const Search = lazy(() => import("./pages/search/Search"));
+const Shipping = lazy(() => import("./pages/shipping/shipping"));
 // Admin Imports
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
@@ -58,10 +59,10 @@ console.log(user)
           <Route
             element={<ProtectedRoute isAuthenticated={user ? true : false} />}
           >
-            {/* <Route path="/shipping" element={<Shipping />} />
-            <Route path="/orders" element={<Orders />} />
+            <Route path="/shipping" element={<Shipping />} />
+            {/* <Route path="/orders" element={<Orders />} />
             <Route path="/order/:id" element={<OrderDetails />} />
-            <Route path="/pay" element={<Checkout />} /> */}
+            <Route path="/pay" element={<Checkout />} />  */}
           </Route>
           {/* Admin Routes */}
           <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role==="admin" ? true : false} />}>
