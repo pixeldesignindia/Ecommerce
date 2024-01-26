@@ -31,14 +31,13 @@ const Shipping = () => {
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    dispatch(saveShippingInfo(shippingInfo));
-
+  
     try {
       const { data } = await axios.post(
         `${server}/api/v1/payment/create`,
         {
           amount: total,
+          shippingInfo: shippingInfo 
         },
         {
           headers: {
@@ -46,7 +45,9 @@ const Shipping = () => {
           },
         }
       );
-
+  
+      dispatch(saveShippingInfo(shippingInfo)); // Dispatch action after successful request
+  
       navigate("/pay", {
         state: data.clientSecret,
       });
@@ -55,6 +56,7 @@ const Shipping = () => {
       toast.error("Something went wrong");
     }
   };
+  
 
   useEffect(() => {
     if (cartItems.length <= 0) return navigate("/cart");

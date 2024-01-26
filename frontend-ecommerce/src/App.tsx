@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./global.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -34,7 +34,7 @@ const ProductManagement = lazy(() => import("./pages/admin/management/productman
 const TransactionManagement = lazy(() =>import("./pages/admin/management/transactionmanagement"));
 
 const App = () => {
-  const [userState, setUserState]=useState(null)
+
 const dispatch= useDispatch()
 const {user,loading}= useSelector((state:{userReducer:UserReducerInitialState})=>state.userReducer)
 

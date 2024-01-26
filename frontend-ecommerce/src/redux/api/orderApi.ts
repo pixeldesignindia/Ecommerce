@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  AllOrdersResponse0,
+  AllOrdersResponse,
   MessageResponse,
   NewOrderRequest,
   OrderDetailsResponse,
@@ -10,7 +10,7 @@ import {
 export const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_SERVER}/api/v1/order/`,
+    baseUrl: `http://localhost:4000/api/v1/order/`,
   }),
   tagTypes: ["orders"],
   endpoints: (builder) => ({
