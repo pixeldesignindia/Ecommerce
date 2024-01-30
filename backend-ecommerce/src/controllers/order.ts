@@ -130,7 +130,7 @@ export const newOroduct = TryCatch(
       paymentMethod
     } = req.body;
 
-    if (!shippingInfo || !orderItems || !user || !subtotal || !tax || !total || !paymentMethod)
+    if (!shippingInfo || !orderItems || !user || !subtotal || !tax || !total)
       return next(new ErrorHandler("Please Enter All Fields", 400));
     if(!shippingInfo ) return next(new ErrorHandler("shipping information must be provided", 400)); 
 
@@ -155,7 +155,7 @@ export const newOroduct = TryCatch(
 
     return res.status(201).json({
       success: true,
-      message: "Product Created Successfully",
+      message: "Order Created Successfully",
     });
   }
 );
