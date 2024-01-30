@@ -34,7 +34,7 @@ const Shipping = () => {
   
     try {
       const { data } = await axios.post(
-        `${server}/api/v1/payment/create`,
+        `${server}/api/v1/payments/create`,
         {
           amount: total,
           shippingInfo: shippingInfo 
@@ -46,7 +46,7 @@ const Shipping = () => {
         }
       );
   
-      dispatch(saveShippingInfo(shippingInfo)); // Dispatch action after successful request
+      dispatch(saveShippingInfo(shippingInfo));
   
       navigate("/pay", {
         state: data.clientSecret,

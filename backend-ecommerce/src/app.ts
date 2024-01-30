@@ -1,5 +1,6 @@
 import {config} from "dotenv";
 import express from "express";
+import Stripe from 'stripe'
 import { connectDB } from "./utils/features.js";
 import { errorMiddleware } from "./middlewares/error.js";
 import NodeCache from "node-cache";
@@ -15,7 +16,7 @@ const stripeKey = process.env.STRIPE_KEY || "";
 
 connectDB(mongoURI);
 export const stripe = new Stripe(stripeKey);
-export const myCache = new NodeCache();
+// export const myCache = new NodeCache();
 
 //importing Routes
 import userRouter from "./routes/user.js"

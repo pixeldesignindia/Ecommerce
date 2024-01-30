@@ -25,6 +25,7 @@ const Header = ({ user }: propestype) => {
     <nav>
       <Link to={"/"}>Home</Link>
       <Link to={"/product"}>Product</Link>
+      <Link to={"/orders"}>Orders</Link>
       <Link to={"/cart"}>
         <FaShoppingBag />
         {cartItems && cartItems.length>=1 && cartItems.length}

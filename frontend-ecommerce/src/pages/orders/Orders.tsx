@@ -3,37 +3,36 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Column } from "react-table";
-import AdminSidebar from "../../components/admin/AdminSidebar";
 import TableHOC from "../../components/admin/TableHOC";
-import { useAllOrdersQuery } from "../../redux/api/orderApi";
-import { RootState } from "../../redux/store";
-import { CustomError } from "../../types/api-types";
+import { useMyOrdersQuery } from "../../redux/api/orderApi";
+import { RootState } from "@reduxjs/toolkit/query"; 
+import { CustomError } from "../../types/api-types"; 
 
-interface DataType {
-  user: string;
+type DataType = {
+  _id: string;
   amount: number;
-  discount: number;
   quantity: number;
+  discount: number;
   status: ReactElement;
   action: ReactElement;
-}
+};
 
-const columns: Column<DataType>[] = [
+const column: Column<DataType>[] = [
   {
-    Header: "Avatar",
-    accessor: "user",
+    Header: "ID",
+    accessor: "_id",
   },
   {
-    Header: "Amount",
-    accessor: "amount",
+    Header: "Quantity",
+    accessor: "quantity",
   },
   {
     Header: "Discount",
     accessor: "discount",
   },
   {
-    Header: "Quantity",
-    accessor: "quantity",
+    Header: "Amount",
+    accessor: "amount",
   },
   {
     Header: "Status",
@@ -45,23 +44,22 @@ const columns: Column<DataType>[] = [
   },
 ];
 
-const Transaction = () => {
+const Orders = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, isError, error } = useAllOrdersQuery(user?._id!);
+  const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
 
   const [rows, setRows] = useState<DataType[]>([]);
 
   if (isError) {
     const err = error as CustomError;
-    toast.error(err.data.message);
   }
 
   useEffect(() => {
     if (data)
       setRows(
         data.orders.map((i) => ({
-          user: i.user.name,
+          _id: i._id,
           amount: i.total,
           discount: i.discount,
           quantity: i.orderItems.length,
@@ -84,18 +82,18 @@ const Transaction = () => {
   }, [data]);
 
   const Table = TableHOC<DataType>(
-    columns,
+    column,
     rows,
     "dashboard-product-box",
-    "Transactions",
+    "Orders",
     rows.length > 6
   )();
   return (
-    <div className="admin-container">
-      <AdminSidebar />
-      <main>{isLoading ? <>loading...</> : Table}</main>
+    <div className="container">
+      <h1>My Orders</h1>
+      {isLoading ? <>loading..</>: Table}
     </div>
   );
 };
 
-export default Transaction;
+export default Orders;

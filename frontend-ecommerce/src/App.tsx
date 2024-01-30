@@ -13,11 +13,14 @@ import { getUser } from "./redux/api/userApi";
 import { UserReducerInitialState } from "./types/reducerTypes";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 
+
 const Home = lazy(() => import("./pages/home/Home"));
 const Login = lazy(() => import("./pages/login/Login"));
 const Cart = lazy(() => import("./pages/cart/Cart"));
 const Search = lazy(() => import("./pages/search/Search"));
 const Shipping = lazy(() => import("./pages/shipping/shipping"));
+const Orders = lazy(()=>import('./pages/orders/Orders'))
+const Checkout = lazy(()=>import('./pages/checkOut/checkout'))
 // Admin Imports
 const Dashboard = lazy(() => import("./pages/admin/dashboard"));
 const Products = lazy(() => import("./pages/admin/products"));
@@ -56,13 +59,11 @@ console.log(user)
           <Route path="/product" element={<Search />} />
           <Route path="/login" element={<ProtectedRoute isAuthenticated={user?false:true}><Login /></ProtectedRoute> } />
            {/* Logged In User Routes */}
-          <Route
-            element={<ProtectedRoute isAuthenticated={user ? true : false} />}
-          >
+          <Route element={<ProtectedRoute isAuthenticated={user ? true : false} />}>
             <Route path="/shipping" element={<Shipping />} />
-            {/* <Route path="/orders" element={<Orders />} />
-            <Route path="/order/:id" element={<OrderDetails />} />
-            <Route path="/pay" element={<Checkout />} />  */}
+            <Route path="/orders" element={<Orders />} />
+            {/* <Route path="/order/:id" element={<OrderDetails />} /> */}
+            <Route path="/pay" element={<Checkout />} /> 
           </Route>
           {/* Admin Routes */}
           <Route element={<ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role==="admin" ? true : false} />}>

@@ -46,7 +46,7 @@ const columns: Column<DataType>[] = [
 const Products = () => {
 
   const {user}= useSelector((state:{userReducer:UserReducerInitialState})=>state.userReducer)
-  console.log(user)
+
   const { data,error,isError } = useAllProductsQuery(user?._id!);
   if (isError) {
     const err = error as CustomError;
