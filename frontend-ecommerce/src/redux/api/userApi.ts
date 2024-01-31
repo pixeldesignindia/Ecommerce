@@ -9,6 +9,7 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl:'http://localhost:4000/api/v1/users',
   }),
+  tagTypes:['users'],
   endpoints: (builder) => ({
     login: builder.mutation<MessageResponse, User>({
       query: (user) => ({
@@ -16,7 +17,21 @@ export const userApi = createApi({
         method: "POST",
         body: user,
       }),
+      invalidatesTags:['users']
     }),
+    deleteUser: builder.mutation<MessageResponse, User>({
+      query: (user) => ({
+        url: "new",
+        method: "POST",
+        body: user,
+      }),
+      invalidatesTags:['users']
+    }),
+    allUsers: builder.query<string,string>({
+      query: (id) =>`all?id${id}`,
+      providesTags:['users']
+    }),
+    
   }),
 });
 

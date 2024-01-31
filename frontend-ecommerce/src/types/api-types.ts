@@ -69,4 +69,5 @@ import { CartItem, Order, Product, ShippingInfo } from "./types";
         discount: number;
         total: number;
         user: string;
+        paymentMethod:string
       };
