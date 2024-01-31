@@ -12,10 +12,12 @@ import {
   updateProduct,
 } from "../controllers/products.js";
 import { singleUpload } from "../middlewares/multer.js";
+import { validatation } from "../middlewares/schema-validator.js";
+import { productSchema } from "../validation/product-validation.js";
 
 
 //To Create New Product  - /api/v1/product/new
-app.post("/new",  singleUpload, newProduct);
+app.post("/new",  singleUpload,validatation(productSchema), newProduct);
 
 //To get all Products with filters  - /api/v1/product/all
 app.get("/all", getAllProducts);
@@ -26,6 +28,7 @@ app.get("/latest", getlatestProducts);
 //To get all unique Categories  - /api/v1/product/categories
 app.get("/categories", getAllCategories);
 
+
 //To get all Products   - /api/v1/product/admin-products
 app.get("/admin-products", adminOnly, getAdminProducts);
 
@@ -33,7 +36,7 @@ app.get("/admin-products", adminOnly, getAdminProducts);
 app
   .route("/:id")
   .get(getSingleProduct)
-  .put(adminOnly, singleUpload, updateProduct)
+  .put(adminOnly, singleUpload,validatation(productSchema), updateProduct)
   .delete(adminOnly, deleteProduct);
 
 export default app;

@@ -14,11 +14,14 @@ export const connectDB = (uri: string) => {
 
 export const invalidateCache = ({
   product,
+ shippingAddress,
   order,
   admin,
   userId,
+  addressId,
   orderId,
   productId,
+
 }: InvalidateCacheProps) => {
   if (product) {
     const productKeys: string[] = [
@@ -43,6 +46,7 @@ export const invalidateCache = ({
 
     myCache.del(ordersKeys);
   }
+
   if (admin) {
     myCache.del([
       "admin-stats",
@@ -50,6 +54,13 @@ export const invalidateCache = ({
       "admin-bar-charts",
       "admin-line-charts",
     ]);
+  }
+    if (shippingAddress) {
+    const addressKeys: string[] = [
+       `my-address-${userId}`
+
+    ];
+    myCache.del(addressKeys);
   }
 };
 

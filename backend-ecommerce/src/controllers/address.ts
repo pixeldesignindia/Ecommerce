@@ -34,8 +34,11 @@ export const deleteAdress = TryCatch(async (req, res, next) => {
 
   await address.deleteOne();
   invalidateCache({
-    addressId:String(address.id),
-    shippingAddress:true})
+    addressId:String(address._id),
+    shippingAddress:true,
+    userId: address.user,
+    
+  })
   return res.status(200).json({
     success: true,
     message: "Address Deleted Successfully",
