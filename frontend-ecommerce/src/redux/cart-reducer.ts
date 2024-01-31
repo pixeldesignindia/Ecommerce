@@ -10,13 +10,7 @@ const initialState: CartReducerInitialState = {
     shippingCharges: 0,
     discount: 0,
     total: 0,
-    shippingInfo: {
-        address: "",
-        city: "",
-        state: "",
-        country: "",
-        pinCode: "",
-    },
+    shippingInfo: "",
 };
 
 export const cartReducer = createSlice({
@@ -50,7 +44,7 @@ export const cartReducer = createSlice({
       );
 
       state.subtotal = subtotal;
-      state.shippingCharges = state.subtotal > 1000 ? 0 : 1;
+      state.shippingCharges = state.subtotal > 1000 ? 0 : 100;
       state.tax = Math.round(state.subtotal * 0.18);
       state.total =
         state.subtotal + state.tax + state.shippingCharges - state.discount;

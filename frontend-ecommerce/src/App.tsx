@@ -48,7 +48,7 @@ if(user){
   dispatch(userExist(data.user)) }
 else{dispatch(userNotExist())}
 })},[]);
-console.log(user)
+
   return (
     <BrowserRouter>
       <Suspense fallback={<h5>Loading...</h5>}>

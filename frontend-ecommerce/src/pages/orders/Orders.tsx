@@ -38,16 +38,13 @@ const column: Column<DataType>[] = [
     Header: "Status",
     accessor: "status",
   },
-  {
-    Header: "Action",
-    accessor: "action",
-  },
 ];
 
 const Orders = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
   const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
+  console.log(isLoading, data, isError, error );
 
   const [rows, setRows] = useState<DataType[]>([]);
 
@@ -76,7 +73,7 @@ const Orders = () => {
               {i.status}
             </span>
           ),
-          action: <Link to={`/admin/transaction/${i._id}`}>Manage</Link>,
+          action: <></>,
         }))
       );
   }, [data]);

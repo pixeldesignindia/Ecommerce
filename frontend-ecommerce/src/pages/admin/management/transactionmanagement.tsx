@@ -38,7 +38,7 @@ const TransactionManagement = () => {
   const navigate = useNavigate();
 
   const { isLoading, data, isError } = useOrderDetailsQuery(params.id!);
-
+console.log(isLoading, data, isError)
   const {
     shippingInfo: { address, city, state, country, pinCode },
     orderItems,
@@ -49,7 +49,7 @@ const TransactionManagement = () => {
     total,
     discount,
     shippingCharges,
-  } = data?.order || defaultData;
+  } = data?.orders || defaultData;
 
   const [updateOrder] = useUpdateOrderMutation();
   const [deleteOrder] = useDeleteOrderMutation();
@@ -57,7 +57,7 @@ const TransactionManagement = () => {
   const updateHandler = async () => {
     const res = await updateOrder({
       userId: user?._id!,
-      orderId: data?.order._id!,
+      orderId: data?.orders._id!,
     });
     responseToast(res, navigate, "/admin/transaction");
   };
@@ -65,7 +65,7 @@ const TransactionManagement = () => {
   const deleteHandler = async () => {
     const res = await deleteOrder({
       userId: user?._id!,
-      orderId: data?.order._id!,
+      orderId: data?.orders._id!,
     });
     responseToast(res, navigate, "/admin/transaction");
   };

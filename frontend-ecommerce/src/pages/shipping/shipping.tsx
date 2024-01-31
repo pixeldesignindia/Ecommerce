@@ -35,11 +35,15 @@ const Shipping = () => {
 
   const submitHandler = async () => {
     try {
+      if (!selectedAddress) {
+        toast.error("Please select an address first");
+        return;
+      }
+      
       const { data } = await axios.post(
         `${server}/api/v1/payments/create`,
         {
           amount: total,
-          shippingInfo: shippingInfo,
         },
         {
           headers: {
@@ -47,7 +51,8 @@ const Shipping = () => {
           },
         }
       );
-      dispatch(saveShippingInfo(shippingInfo));
+      
+      dispatch(saveShippingInfo(selectedAddress));
       navigate("/pay", {
         state: data.clientSecret,
       });
@@ -56,6 +61,7 @@ const Shipping = () => {
       toast.error("Something went wrong");
     }
   };
+  
 
   const getAddress = async () => {
     try {
@@ -65,20 +71,9 @@ const Shipping = () => {
       setAddresses(addressData.data.getAllAdress);
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
     }
   };
 
-  const updateAddress = async (_id) => {
-    try {
-      const addressData = await axios.put(
-        `${server}/api/v1/address/${_id}`
-      );
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong");
-    }
-  };
 
   const deleteAddress = async (_id) => {
     try {
@@ -88,7 +83,6 @@ const Shipping = () => {
       getAddress();
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
     }
   };
   const cancelEdit = () => {
@@ -126,6 +120,7 @@ const Shipping = () => {
         pinCode: "",
       });
       setShowForm(false); 
+      getAddress()
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -172,7 +167,6 @@ const Shipping = () => {
       getAddress();
     } catch (error) {
       console.log(error);
-      toast.error("Failed to update address");
     }
   };
 
