@@ -5,6 +5,7 @@ import ErrorHandler from "../utils/utility-class.js";
 import { Address } from "../models/address.js";
 import { invalidateCache } from "../utils/features.js";
 import { myCache } from "../app.js";
+import { editAddress } from 'Ecommerce\backend-ecommerce\src\controllers\address';
 
 
 export const getAllAdressByUser =TryCatch(async(req,res,next)=>{
@@ -64,11 +65,13 @@ export const editAddress =  TryCatch(async (req, res, next) => {
 
   await editAddress.save();
   invalidateCache({
-    addressId:String(address.id),
-    shippingAddress:true})
+    addressId:String(address._id),
+    shippingAddress:true,
+    userId: address.user,
+  })
   return res.status(200).json({
     success: true,
-    message: "Shipping address Deleted Successfully",
+    message: "Shipping address edit Successfully",
   });
 });
 
