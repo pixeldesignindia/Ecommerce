@@ -64,7 +64,7 @@ export const editAddress =  TryCatch(async (req, res, next) => {
 
   await editAddress.save();
   invalidateCache({
-    addressId:String(address._id),
+    addressId:String(id),
     shippingAddress:true,
     userId: address.user,
   })
