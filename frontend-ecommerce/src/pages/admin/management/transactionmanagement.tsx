@@ -109,7 +109,7 @@ console.log(isLoading, data, isError)
               <p>Name: {name}</p>
               <p>
                 Address:{" "}
-                {`${address}, ${city}, ${state}, ${country} ${pinCode}`}
+                {`${ address && address}, ${city}, ${state}, ${country} ${pinCode}`}
               </p>
               <h5>Amount Info</h5>
               <p>Subtotal: {subtotal}</p>
