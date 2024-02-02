@@ -10,9 +10,10 @@ import {
   newUser,
 } from "../controllers/user.js";
 import { adminOnly } from "../middlewares/auth.js";
+import { validatation } from "../middlewares/schema-validator.js";
+import { userSchema } from "../validation/user-validation.js";
 
-
-app.post("/new",newUser)
+app.post("/new",validatation(userSchema),newUser)
 
 app.get("/all",adminOnly,getAllUsers)
 

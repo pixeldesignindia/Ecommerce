@@ -9,7 +9,7 @@ const app = express.Router();
 app.post("/new",newAddress);
 app.get("/all-address/:id",getAllAdressByUser)
 
-app.route("/id").delete(deleteAdress).put(editAddress)
+app.route("/:id").delete(deleteAdress).put(editAddress)
 
 
 export default app;

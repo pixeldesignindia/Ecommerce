@@ -16,6 +16,7 @@ export interface NewProductRequestBody {
   stock: number;
   price: number;
 }
+
 export type ControllerType = (
   req: Request,
   res: Response,
@@ -42,6 +43,7 @@ export interface BaseQuery {
 export type InvalidateCacheProps = {
   product?: boolean;
   order?: boolean;
+  address?:boolean;
   shippingAddress?:boolean;
   admin?: boolean;
   userId?: string;
@@ -59,4 +61,22 @@ export interface newAdressRequestBody{
   user: string;
   name: string;
   phoneNumber:number;
+}
+export type OrderItemType = {
+  name: string;
+  photo: string;
+  price: number;
+  quantity: number;
+  productId: string;
+};
+export interface NewOrderRequestBody {
+  shippingInfo:string;
+  user: string;
+  subtotal: number;
+  tax: number;
+  shippingCharges: number;
+  discount: number;
+  total: number;
+  paymentMethod: string;
+  orderItems: OrderItemType[];
 }
