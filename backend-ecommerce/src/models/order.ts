@@ -3,11 +3,10 @@ import mongoose from "mongoose";
 
 const schema = new mongoose.Schema(
   {
-    shippingInfo: {
-        type:mongoose.Types.ObjectId,
-        ref:"Address"
- 
-    },
+     shippingInfo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Address',
+  },
 
     user: {
       type: String,

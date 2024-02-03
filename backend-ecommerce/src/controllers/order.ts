@@ -49,7 +49,8 @@ export const singleOrder = TryCatch(async (req, res, next) => {
 
   if (myCache.has(key)) orders = JSON.parse(myCache.get(key) as string);
   else {
-    orders = await Order.findById(id).populate("shippingInfo")
+    orders = await Order.findById(id).populate({ path: 'shippingInfo', model: 'Address' })
+  .exec();
     myCache.set(key, JSON.stringify(orders));
   }
   return res.status(200).json({

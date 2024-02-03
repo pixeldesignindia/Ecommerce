@@ -16,7 +16,7 @@ export const getAllAdressByUser =TryCatch(async(req,res,next)=>{
   if (myCache.has(key))
     getAllAdress = JSON.parse(myCache.get(key) as string);
 else{
-  getAllAdress  =  await Address.find({user:user}).sort({createdAt:-1});
+  getAllAdress  =  await Address.find({user:user,isDeleted:false}).sort({createdAt:-1});
     if(getAllAdress.length<1) return next(new ErrorHandler("You have no Address yet", 400));
      myCache.set(key, JSON.stringify(getAllAdress));
 }
@@ -32,7 +32,10 @@ export const deleteAdress = TryCatch(async (req, res, next) => {
   const address = await Address.findById(id);
   if (!address) return next(new ErrorHandler("address  Not Found", 404));
 
-  await address.deleteOne();
+  await Address.updateOne(
+    { _id:id },
+    { $set: { isDeleted: true } }
+  );
   invalidateCache({
     addressId:String(address._id),
     shippingAddress:true,
